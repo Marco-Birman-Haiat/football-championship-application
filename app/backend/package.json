@@ -34,6 +34,7 @@
     "@types/validator": "13.6.6",
     "@typescript-eslint/eslint-plugin": "5.3.1",
     "@typescript-eslint/parser": "5.3.1",
+    "types-joi": "^2.1.0",
     "chai": "4.3.6",
     "chai-http": "4.3.0",
     "eslint": "7.32.0",
@@ -59,6 +60,7 @@
     "jest": "27.4.3",
     "jsonwebtoken": "8.5.1",
     "mysql2": "2.3.3",
-    "sequelize": "6.25.5"
+    "sequelize": "6.25.5",
+    "joi": "17.6.0"
   }
 }
