@@ -1,5 +1,6 @@
 import * as express from 'express';
 import router from './routes';
+import ErrorMiddleware from './middleware/errorMiddleware';
 
 class App {
   public app: express.Express;
@@ -8,9 +9,11 @@ class App {
     this.app = express();
 
     this.config();
+    this.app.use(router);
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
+    this.app.use(ErrorMiddleware.catchError);
   }
 
   private config():void {
@@ -23,7 +26,6 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
-    this.app.use(router);
   }
 
   public start(PORT: string | number): void {
