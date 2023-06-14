@@ -1,4 +1,7 @@
-export interface TeamEntity {
-  id: string;
+import { Identifiable } from '..';
+
+export interface TeamEntity extends Identifiable {
   teamName: string;
 }
+
+export type TeamReponse = TeamEntity;
