@@ -11,3 +11,5 @@ export interface UserEntity extends Identifiable, Login {
 }
 
 export type TeamReponse = NewEntity<UserEntity>;
+
+export type IUserResponse = Omit<UserEntity, 'password'>;
