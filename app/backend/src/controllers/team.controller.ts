@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { ITeamService } from '../services/team.service';
+import getErrorCode from '../utils/httpError';
 
 export interface ITeamController {
   findAll(req: Request, res: Response): Promise<Response>;
@@ -19,6 +20,10 @@ export default class TeamController implements ITeamController {
     const { id } = req.params;
 
     const foundTeam = await this.teamService.findById(id);
+
+    if (foundTeam.status === 'notFound') {
+      return res.status(getErrorCode(foundTeam.status)).json(foundTeam.data);
+    }
     return res.status(200).json(foundTeam.data);
   }
 }
