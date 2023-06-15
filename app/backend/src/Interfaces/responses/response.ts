@@ -1,3 +1,3 @@
-export type ResponseErrorType = 'INVALID_DATA' | 'UNAUTHORIZED' | 'NOT_FOUND' | 'CONFLICT';
+export type ResponseErrorType = 'invalidData' | 'unauthorized' | 'notFound' | 'conflict';
 
-export type ResponseSuccessType = 'SUCCESSFUL' | 'OK' | 'CREATED';
+export type ResponseSuccessType = 'successful' | 'ok' | 'created';
