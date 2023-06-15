@@ -6,7 +6,7 @@ export default class validateLogin {
   static executeValidation(userData: Login): ValidationResponse<string> {
     const { error } = loginSchema.validate(userData);
 
-    if (error) return { status: 'INVALID_DATA', data: { message: 'Invalid email or password' } };
+    if (error) return { status: 'unauthorized', data: { message: 'Invalid email or password' } };
     return { status: null, data: '' };
   }
 }
