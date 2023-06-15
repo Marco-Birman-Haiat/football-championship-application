@@ -1,25 +1,18 @@
 import * as jwt from 'jsonwebtoken';
 
-const secret = process.env.JTW_SECRET || 'minhaSenhaMBH';
+const secret = process.env.JTW_SECRET || 'jwt_secret';
 
 export type TokenPayload = {
   id: number;
   email: string;
 };
 
-export interface IJwtAuthorization {
-  verifyToken(token: string): string | jwt.JwtPayload;
-  createToken(payload: TokenPayload): string;
-}
-
-export default class JwtAuthorization implements IJwtAuthorization {
-  private jwt = jwt;
-
-  verifyToken(token: string): string | jwt.JwtPayload {
-    return this.jwt.verify(token, secret);
+export default class JwtAuthorization {
+  static verifyToken(token: string): string | jwt.JwtPayload {
+    return jwt.verify(token, secret);
   }
 
-  createToken(payload: TokenPayload): string {
-    return this.jwt.sign({ data: payload }, secret);
+  static createToken(payload: TokenPayload): string {
+    return jwt.sign(payload, secret);
   }
 }
