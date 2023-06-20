@@ -5,10 +5,11 @@ import { NewEntity } from '../Interfaces';
 
 export interface IMatchRepository {
   getAll(): Promise<MatchEntity[]>;
+  create(match: NewEntity<MatchEntity>): Promise<MatchEntity>;
   getWithFilter(filterParams: Partial<MatchEntity>): Promise<MatchEntity[]>;
   getById(id: number): Promise<MatchEntity | null>;
   update(
-    matchData: NewEntity<MatchEntity>,
+    matchData: Partial<MatchEntity>,
     filterOptions: Partial<MatchEntity>
   ): Promise<void>;
 }
@@ -51,7 +52,13 @@ export default class MatchRepository implements IMatchRepository {
     return filteredMatches.map((match) => match.dataValues);
   }
 
-  async update(matchData: NewEntity<MatchEntity>, filterOptions: Partial<MatchEntity>)
+  async create(match: NewEntity<MatchEntity>): Promise<MatchEntity> {
+    const newMatch = await this.matchModel.create(match);
+
+    return newMatch.dataValues;
+  }
+
+  async update(matchData: Partial<MatchEntity>, filterOptions: Partial<MatchEntity>)
     : Promise<void> {
     await this.matchModel.update(matchData, { where: filterOptions });
   }
