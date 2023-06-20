@@ -7,6 +7,8 @@ export interface IMatchController {
   getAll(req: Request, res: Response): Promise<Response>;
   finishMatch(req: Request, res: Response): Promise<Response>;
   getByInProgress(req: Request, res: Response): Promise<Response>;
+  updateScoreBoard(req: Request, res: Response): Promise<Response>;
+  create(req: Request, res: Response): Promise<Response>;
 }
 
 export default class MatchController implements IMatchController {
@@ -26,6 +28,28 @@ export default class MatchController implements IMatchController {
     const allMatches = await this.matchService.getAll();
 
     return res.status(200).json(allMatches.data);
+  }
+
+  async create(req: Request, res: Response): Promise<Response> {
+    const { homeTeamGoals, awayTeamGoals, homeTeamId, awayTeamId } = req.body;
+
+    const createdMatch = await this.matchService
+      .create({ homeTeamGoals, awayTeamGoals, homeTeamId, awayTeamId });
+
+    if (createdMatch.status === 'notFound' || createdMatch.status === 'uprocessableData') {
+      return res.status(getErrorCode(createdMatch.status)).json(createdMatch.data);
+    }
+    return res.status(201).json(createdMatch.data);
+  }
+
+  async updateScoreBoard(req: Request, res: Response): Promise<Response> {
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    const { id } = req.params;
+
+    const updatedMatch = await this.matchService
+      .updateScoreboard({ homeTeamGoals, awayTeamGoals }, id);
+
+    return res.status(200).json(updatedMatch.data);
   }
 
   async getByInProgress(req: Request, res: Response): Promise<Response> {
