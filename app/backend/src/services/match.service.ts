@@ -5,7 +5,7 @@ import { ServiceResponse } from '../Interfaces/responses/serviceResponse';
 
 export interface IMatchService {
   getAll(): Promise<ServiceResponse<MatchEntitySimple[]>>;
-  getByInProgress(inProgress: boolean): Promise<ServiceResponse<MatchEntity[]>>;
+  getByInProgress(inProgress: boolean): Promise<ServiceResponse<MatchEntitySimple[]>>;
   create(match: MatchComponents): Promise<ServiceResponse<MatchEntity>>;
   finishMatch(id: string): Promise<ServiceResponse<{ message: string }>>;
   updateScoreboard(scoreBoard: MatchScoreboard,
@@ -22,11 +22,13 @@ export default class MatchService implements IMatchService {
     return { status: 'ok', data: allMatchesAdjusted };
   }
 
-  async getByInProgress(inProgress: boolean): Promise<ServiceResponse<MatchEntity[]>> {
+  async getByInProgress(inProgress: boolean): Promise<ServiceResponse<MatchEntitySimple[]>> {
     const filterAttribute = { inProgress };
     const filteredMatches = await this.matchRepository.getWithFilter(filterAttribute);
 
-    return { status: 'ok', data: filteredMatches };
+    const filteredMatchesAdjusted = filteredMatches
+      .map((match) => MatchService.adjustMatchTeams(match));
+    return { status: 'ok', data: filteredMatchesAdjusted };
   }
 
   async create(match: MatchComponents): Promise<ServiceResponse<MatchEntity>> {

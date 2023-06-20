@@ -25,7 +25,9 @@ export default class MatchRepository implements IMatchRepository {
       ],
     });
 
-    return allMatches.map((match) => match.dataValues);
+    return allMatches.map((match) => ({
+      ...match.dataValues,
+    }));
   }
 
   async getById(id: number): Promise<MatchEntity | null> {
