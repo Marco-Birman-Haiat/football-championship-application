@@ -30,14 +30,11 @@ export default class LoginController implements ILoginController {
   async getRoleById(req: Request, res: Response): Promise<Response> {
     const { id } = (req as AuthenticatedRequest).payload;
 
-    console.log('req no controller ', (req as AuthenticatedRequest).payload, id);
-
     const foundRole = await this.userService.getRoleById(id.toString());
 
     if (foundRole.status === 'notFound') {
       return res.status(getErrorCode(foundRole.status)).json(foundRole.data);
     }
-    console.log('passou do erro controller');
     return res.status(200).json(foundRole.data);
   }
 }

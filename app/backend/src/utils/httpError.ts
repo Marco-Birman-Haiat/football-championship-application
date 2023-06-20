@@ -5,6 +5,7 @@ const mapHttpStatus: Record<ResponseErrorType, number> = {
   notFound: 404,
   unauthorized: 401,
   conflict: 409,
+  uprocessableData: 422,
 };
 
 const getErrorCode = (type: ResponseErrorType): number => mapHttpStatus[type];
