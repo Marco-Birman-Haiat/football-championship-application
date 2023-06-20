@@ -17,4 +17,16 @@ matchRoute.patch(
   async (req, res) => matchController.finishMatch(req, res),
 );
 
+matchRoute.patch(
+  '/:id',
+  TokenValidation.validateToken,
+  async (req, res) => matchController.updateScoreBoard(req, res),
+);
+
+matchRoute.post(
+  '/',
+  TokenValidation.validateToken,
+  async (req, res) => matchController.create(req, res),
+);
+
 export default matchRoute;
