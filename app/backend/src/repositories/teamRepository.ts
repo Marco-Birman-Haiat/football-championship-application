@@ -1,8 +1,12 @@
 import { TeamEntity } from '../Interfaces/entities/teamEntity';
 import TeamModel from '../database/models/team.model';
-import { ITeamModel } from '../Interfaces/entities/teamModel';
 
-export default class TeamRepository implements ITeamModel {
+export interface ITeamRepository {
+  findAll(): Promise<TeamEntity[]>;
+  findById(id: number): Promise<TeamEntity | null>;
+}
+
+export default class TeamRepository implements ITeamRepository {
   private teamModel = TeamModel;
 
   async findAll(): Promise<TeamEntity[]> {

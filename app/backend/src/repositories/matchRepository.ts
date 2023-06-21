@@ -25,6 +25,7 @@ export default class MatchRepository implements IMatchRepository {
       ],
     });
 
+    // console.log(allMatches);
     return allMatches.map((match) => ({
       ...match.dataValues,
     }));
