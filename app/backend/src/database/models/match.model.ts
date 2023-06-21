@@ -1,15 +1,14 @@
 import {
   DataTypes,
   Model,
-  InferAttributes,
-  InferCreationAttributes,
   CreationOptional,
 } from 'sequelize';
 import db from '.';
+import { MatchEntity } from '../../Interfaces/entities/matchEntity';
+import { NewEntity } from '../../Interfaces';
 // import OtherModel from './OtherModel';
 
-class MatchModel extends Model<InferAttributes<MatchModel>,
-InferCreationAttributes<MatchModel>> {
+class MatchModel extends Model<MatchEntity, NewEntity<MatchEntity>> {
   declare id: CreationOptional<number>;
   declare homeTeamId: number;
   declare homeTeamGoals: number;
