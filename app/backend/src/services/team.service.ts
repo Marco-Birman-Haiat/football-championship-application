@@ -1,6 +1,6 @@
-import { ITeamModel } from '../Interfaces/entities/teamModel';
 import { ServiceResponse } from '../Interfaces/responses/serviceResponse';
 import { TeamEntity } from '../Interfaces/entities/teamEntity';
+import { ITeamRepository } from '../repositories/teamRepository';
 
 export interface ITeamService {
   findAll(): Promise<ServiceResponse<TeamEntity[]>>
@@ -8,7 +8,7 @@ export interface ITeamService {
 }
 
 export default class TeamService implements ITeamService {
-  constructor(private teamRepository: ITeamModel) {}
+  constructor(private teamRepository: ITeamRepository) {}
 
   async findAll(): Promise<ServiceResponse<TeamEntity[]>> {
     const allTeams = await this.teamRepository.findAll();

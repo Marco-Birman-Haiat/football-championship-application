@@ -73,6 +73,7 @@ export default class MatchService implements IMatchService {
   }
 
   private static adjustMatchTeams(match: MatchEntity): MatchEntitySimple {
+    // console.log(match);
     return {
       ...match,
       homeTeam: { teamName: match.homeTeam?.teamName || 'team' },
