@@ -7,12 +7,12 @@ export default class ValidateRequest {
 
     if (!email || !password) {
       const error = new RequestError({
-        name: 'invalidData',
+        name: 'unauthorized',
         message: 'All fields must be filled',
       });
 
       return next(error);
     }
-    next();
+    return next();
   }
 }
